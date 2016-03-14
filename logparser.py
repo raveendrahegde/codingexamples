@@ -33,6 +33,68 @@ class MaxHeap(object):
 			else:
 				return
 	
+	def __bubbleDown(self, index):
+		if index == len(self.heap) - 1:
+			return
+		else:
+			leftChildIndex = 2*index
+			rightChildIndex = 2*index + 1
+
+			hasLeftChild = self.__hasLeftChild(leftChildIndex)
+			hasRightChild = self.__hasRightChild(rightChildIndex)
+			
+			if hasLeftChild and hasRightChild:
+				leftCount = self.heap[leftChildIndex]["count"]
+				rightCount = self.heap[rightChildIndex]["count"]
+
+				if leftCount >= rightCount:
+					if self.heap[index]["count"] < self.heap[leftChildIndex]["count"]:
+						self.heap[index], self.heap[leftChildIndex] = self.heap[leftChildIndex], self.heap[index]
+						self.__bubbleDown(leftChildIndex)
+				elif leftCount < rightCount:
+					if self.heap[index]["count"] < self.heap[rightChildIndex]["count"]:
+						self.heap[index], self.heap[rightChildIndex] = self.heap[rightChildIndex], self.heap[index]
+						self.__bubbleDown(rightChildIndex)
+
+			elif hasLeftChild and not hasRightChild:
+				leftCount = self.heap[leftChildIndex]["count"]
+				if self.heap[index]["count"] < self.heap[leftChildIndex]["count"]:
+					self.heap[index], self.heap[leftChildIndex] = self.heap[leftChildIndex], self.heap[index]
+			else:
+				return
+
+	def push(self, item):
+		self.heap.append(item)
+		self.__bubbleUp(len(self.heap) - 1)
+
+	def popMax(self):
+		"""Remove top value, move last child to top and bubble down"""
+		if len(self.heap) == 1:
+			maxv = self.heap.pop(0)
+			return maxv
+		elif len(self.heap) > 1:
+			maxv = self.heap.pop(0) #Remove the first element
+			last = self.heap.pop()
+			self.heap.insert(0, last)
+			self.__bubbleDown(0)
+			return maxv
+		else:
+			return None
+
+	def __hasLeftChild(self, leftChildIndex):
+		hasLeftChild = True
+		if leftChildIndex > (len(self.heap) -1):
+			hasLeftChild = False
+
+		return hasLeftChild
+
+	def __hasRightChild(self, rightChildIndex):
+		hasRightChild = True
+		if rightChildIndex > (len(self.heap) -1):
+			hasRightChild =  False
+
+		return hasRightChild
+
 
 class ReadFile(threading.Thread):
 	"""Reads a given file to look for log lines based on regex. Runs on its own thread"""
@@ -115,8 +177,7 @@ class ReadFile(threading.Thread):
 	def heapify(self):
 		for level in self.loglevels:
 			mheap = MaxHeap(self.data[level])
-			self.data[level] = mheap.heap
-		
+			self.data[level] = mheap #Attach the heap object
 		mydata.append(self.data) #Append to global list to retain data
 
 
@@ -147,23 +208,23 @@ def printData():
 	"""Prints the final data in required format"""
 	for filedata in mydata:
 		print "--For file %s --\n" %filedata["filename"]
-		for level, data in filedata.iteritems():
+		for level, heap in filedata.iteritems():
 			if level == "filename":
 				continue
 			else:
-				totalLines = getTotal(data)
+				totalLines = getTotal(heap.heap)
 				if totalLines:
 					print level + " lines"
-					print str(getTotal(data)) + " Total lines"
+					print str(totalLines) + " Total lines"
 
-					if len(data) <= 5:
-						count = len(data)
+					if len(heap.heap) <= 5:
+						count = len(heap.heap)
 					else:
 						count = 5
 
-					for count in range(1,count+1):
-						print "%d. %s - %d instance" %(count, data[count-1]["loginfo"], data[count-1]["count"])
-					
+					for count in range(0,count):
+						top = heap.popMax()
+						print "%d. %s - %d instance" %(count+1, top["loginfo"], top["count"])
 					print "\n"
 
 def getTotal(alist):
