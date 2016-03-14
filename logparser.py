@@ -274,6 +274,7 @@ Reading directories is not necessarily run on different threads, but done so for
 Reading of the files is usuful to run on threads because it's a time consuming operation. 
 The files are read line by line and the regex matched lines are used to construct a data structure which is a dictionary with log levels as keys and list of dictionaries as values.
 The maps inside the list contain any distinct log line, and how may times we have seen it. Then those list are converted to max heap(based on the count) and top 5 lines are printed using printData function.
+The max heap here is not treditional list of number, but a list of dictionary. Value of key `count` is considerered for the heap property.
 It is possible to further improve the performance by constructing the max heap itself during log reading itself than converting to max heap after the log reading has been completed. 
 I chose not to implement in that way because its log reading which is more time time intensive than converting the max heap.
 
