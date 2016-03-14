@@ -12,17 +12,17 @@ logger = logging.getLogger(__name__)
 
 mydata = []
 
-
 class MaxHeap(object):
 	def __init__(self, items):
 		self.heap = []
 
 		for i in items:
 			self.heap.append(i)
-			self.__bubbleUp(len(self.heap) - 1)
+			self.__bubbleUp(len(self.heap) - 1) #Append new value and bubble up
 
 
 	def __bubbleUp(self, index):
+		"""Bubble up recursively to right position"""
 		if index == 0:
 			return
 		else:
@@ -34,6 +34,8 @@ class MaxHeap(object):
 				return
 	
 	def __bubbleDown(self, index):
+		"""Bubbles dowsn recursively to right position. Checks if node has children to compare values. 
+		If no children then it's the leaf node, so can't bubble down""" 
 		if index == len(self.heap) - 1:
 			return
 		else:
@@ -60,7 +62,7 @@ class MaxHeap(object):
 				leftCount = self.heap[leftChildIndex]["count"]
 				if self.heap[index]["count"] < self.heap[leftChildIndex]["count"]:
 					self.heap[index], self.heap[leftChildIndex] = self.heap[leftChildIndex], self.heap[index]
-			else:
+			else: #Only right child can't exists.
 				return
 
 	def push(self, item):
@@ -68,7 +70,7 @@ class MaxHeap(object):
 		self.__bubbleUp(len(self.heap) - 1)
 
 	def popMax(self):
-		"""Remove top value, move last child to top and bubble down"""
+		"""Remove top value, move last child to top and bubbles it down"""
 		if len(self.heap) == 1:
 			maxv = self.heap.pop(0)
 			return maxv
@@ -208,6 +210,7 @@ def printData():
 	"""Prints the final data in required format"""
 	for filedata in mydata:
 		print "--For file %s --\n" %filedata["filename"]
+		print filedata
 		for level, heap in filedata.iteritems():
 			if level == "filename":
 				continue
@@ -277,49 +280,30 @@ I chose not to implement in that way because its log reading which is more time 
 It is assumed that log directories are present current directory.
 
 The data structure, after converting to max heap looks like below:
-
-{  
-   "INFO":[  
-      {  
-         "count":83583,
-         "loginfo":" Log line content A"
-      },
-      {  
-         "count":5302,
-         "loginfo":" Log line content Z"
-      },
-      {  
-         "count":2442,
-         "loginfo":" Log line content X"
-      },
-   ],
-   "filename":"logdir/example1.log",
-   "WARNING":[  
-      {  
-         "count":63052,
-         "loginfo":" Log line content C"
-      }
-   ],
-   "ERROR":[  
-      {  
-         "count":31174,
-         "loginfo":" Log line content B"
-      },
-      {  
-         "count":2651,
-         "loginfo":" Log line content Z"
-      }
-   ],
-   "DEBUG":[  
-
-   ],
-   "FATAL":[  
-      {  
-         "count":93863,
-         "loginfo":" Log line content D"
-      }
-   ]
+{
+'filename': 'logdir/example2.log',
+'INFO': <__main__.MaxHeap object at 0x1076fc5d0>,
+'WARNING': <__main__.MaxHeap object at 0x1076fc610>,
+'ERROR': <__main__.MaxHeap object at 0x1076fc7d0>,
+'DEBUG': <__main__.MaxHeap object at 0x1076fc850>,
+'FATAL': <__main__.MaxHeap object at 0x1076fc810>
 }
+
+data of MaxHeap object would look like:
+[  
+  {  
+     "count":83583,
+     "loginfo":" Log line content A"
+  },
+  {  
+     "count":5302,
+     "loginfo":" Log line content Z"
+  },
+  {  
+     "count":2442,
+     "loginfo":" Log line content X"
+  }
+]
 """
 
 """
