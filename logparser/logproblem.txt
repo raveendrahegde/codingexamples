@@ -1,0 +1,41 @@
+Good
+- Implemented multi-threaded approach to reading files from a directory
+- Finds relevant lines using regex
+- Efficient way to sort and get top 5 most occurring lines using heap
+
+
+No good (make sure they don't do this)
+- Does not use regex for log lines
+- Assumes logs lines will only ever contain two “hyphens”
+- Does not optimize parsing a directory for parallel execution
+- Inefficient implementation, needlessly complicated - Takes entire file, converts to json, then searches through entire json once per level (5 total run throughs of entire data structure)
+- Does not optimize for parallel execution when dealing with a directory
+___________________________________
+
+
+Coding Exercise
+
+1. Given a path to a file containing log lines, return a data structure of the top 5 types of log lines sorted by log level.
+
+Possible log levels: INFO, ERROR, WARNING, FATAL, DEBUG
+
+Sample document:
+2016-03-03 12:39:22,327 - INFO - Log line content A
+2016-03-03 12:39:22,330 - ERROR - Log line content B
+2016-03-03 12:39:42,484 - WARNING - Log line content C
+2016-03-03 12:39:42,484 - FATAL - Log line content D
+2016-03-03 12:39:42,528 - INFO - Log line content A
+
+Sample output, in a format of your choosing
+INFO lines
+2 Total Lines
+1. Log line content A - 2 instances
+
+ERROR lines
+1 Total Line
+1. Log line content B - 1 instance
+
+2. Expand your script to account for a directory of log files.  Optimize your script so that the runtime for a directory should be the same as an individual file.
+3. Provide 10 ways to test your script.  Please describe and explain using sentences, no code is needed.
+4. Explain in a paragraph your high level design, design decisions, any assumptions made, and a walkthrough of your code for #2.
+
