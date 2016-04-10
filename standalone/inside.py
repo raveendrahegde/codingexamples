@@ -1,6 +1,6 @@
 def mods(module):
 	""" Extension of vars(). Lists attributes, values and functions separately. 
-	To be improved to include exceptions, builtins etc"""
+	To be improved to include other types and improve accuracy etc"""
 
 	v=vars(module)
 	details = {
@@ -12,9 +12,11 @@ def mods(module):
 		'attributes':{},
 	}
 	for k,v in v.iteritems():
+		print v, type(v)
 		if hasattr(v, '__call__'):
 			details["functions"][k] = v
-		elif type(v) is type:
+		elif isinstance(v, Exception):
+			print "CRAP"
 			details["exceptions"][k] = v
 		elif k == "__builtins__":
 			details["builtins"] = v
@@ -32,3 +34,5 @@ def mods(module):
 	for k, v in details["functions"].iteritems():
 		print k + "()"
 
+	print "EX"
+	print details["exceptions"]
