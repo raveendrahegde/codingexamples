@@ -16,7 +16,6 @@ def mods(module):
 		if hasattr(v, '__call__'):
 			details["functions"][k] = v
 		elif isinstance(v, Exception):
-			print "CRAP"
 			details["exceptions"][k] = v
 		elif k == "__builtins__":
 			details["builtins"] = v
@@ -33,6 +32,3 @@ def mods(module):
 	print "\n-----Functions------"
 	for k, v in details["functions"].iteritems():
 		print k + "()"
-
-	print "EX"
-	print details["exceptions"]
