@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<head>
+</head>
+<body>
+	<script type="text/javascript">
+		window.onload = function () {
+			canvas = document.getElementById("test");
+			canvas.style.background = "red"
+			context = canvas.getContext('2d')
+			context.fillStyle = 'green';
+			context.fillRect(0,0,299,299);
+			context.strokeRect(10,10,279,279);
+			context.clearRect(20,20,259,259);
+			
+			gradient = context.createLinearGradient(0,0,0,150)
+			gradient.addColorStop(0, "#FFF")
+			gradient.addColorStop(1, "blue")
+			
+			context.fillStyle = gradient
+			context.fillRect(30,30,229,229);
+
+			context.font = "35pt arial"
+			context.strokeText("Hi Ravee!", 40, 140)
+		}
+	</script>
+	<canvas id="test" height="300px" width="300px"></canvas>
+</body>

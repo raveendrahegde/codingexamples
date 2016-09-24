@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<head>
+	<script type="text/javascript">
+		alert(navigator.geolocation.getCurrentPosition(granted, denied))
+
+		function granted(position) {
+			alert(position)
+			// alert(position.coords.latitude)
+		}
+
+		function denied(error) {
+			alert(error.code)
+		}
+	</script>
+</head>
+<body></body>
