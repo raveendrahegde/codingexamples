@@ -1,4 +1,7 @@
+from functools import wraps
+
 def dec_4x(func):
+    @wraps(func) # To preserve calling function name
     def wrapper(*args, **kwargs):
         return func(*args, **kwargs) * 4
     return wrapper
@@ -21,3 +24,5 @@ def add_three(num):
 if __name__ == '__main__':
     print(add_two(10))
     print(add_three(10))
+    print(add_two.__name__)
+    print(add_three.__name__)
