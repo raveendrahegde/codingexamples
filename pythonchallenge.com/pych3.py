@@ -40,7 +40,7 @@ with open(file) as f:
 			if left.isupper() and lleft.islower() and right.isupper() and rright.islower():
 				interesting.append(char)
 
-	print "".join(interesting)
+	print("".join(interesting))
 
 
 

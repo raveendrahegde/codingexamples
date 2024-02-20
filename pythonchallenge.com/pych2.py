@@ -9,4 +9,4 @@ with open(file) as f:
 			if char.lower() in alpha:
 				chars.append(char)
 
-print "".join(chars)
+print("".join(chars))
