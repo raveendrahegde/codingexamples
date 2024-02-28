@@ -6,14 +6,14 @@ def sum_is_zero(pnlist):
 	ndict = add_two_nums(nlist)
 
 	for pnum in plist:
-		for nkey, nval in ndict.iteritems():
+		for nkey, nval in ndict.items():
 			if pnum + nval == 0:
-				print pnum, nkey
+				print(pnum, nkey)
 
 	for nnum in nlist:
-		for pkey, pval in pdict.iteritems():
+		for pkey, pval in pdict.items():
 			if nnum + pval == 0:
-				print nnum, pkey 
+				print(nnum, pkey)
 
 
 def add_two_nums(anylist):
@@ -38,6 +38,6 @@ def separate_list(inputlist):
 
 if __name__ == '__main__':
 	'''Problem definition: Given a list of integers, output all subsets of size three, which sum to zero'''
-	inputlist=input('Enter List:')
+	inputlist=[-1, 0, 1, 2, -1, -4]
 	sum_is_zero(separate_list(inputlist))
 
