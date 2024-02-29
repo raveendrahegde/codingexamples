@@ -35,8 +35,9 @@ class SQL():
 
   def runQuery(self, query):
     result = []
-    SELECT, WHERE, ORDERBY = self.parser.match(query).groups()
-    
+    match = self.parser.match(query)
+    WHERE = match.group(2)
+
     for item in self.library:
       all_conditions = []
       selected = True
@@ -44,13 +45,12 @@ class SQL():
       if WHERE:
         conditions = [condition.strip() for condition in WHERE.split('AND')]
         for condition in conditions:
-          pattern = re.compile(r"(\w+)\s*([><=]+)\s*'?([^']+)'?")
+          pattern = re.compile(r"(\w+)\s*([><=]+)\s*'?([^']+)'?") # Pattern inside WHERE clause
           (key, symbol, val) = pattern.match(condition).groups()
 
           all_conditions.append({'key': key, 'symbol': symbol, 'val': val})
       
       for condition in all_conditions:
-        expression = f"{item[condition['key']]} {condition['symbol']} {condition['val']}"
         if condition['symbol'] == '=':
           if item[condition['key']] != condition['val']:
             selected = False
