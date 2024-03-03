@@ -1,5 +1,5 @@
 # Q: Given a list of integers, output all subsets of size three, which sum to zero
-# Algorithm: This program uses the two pointer approach after sorting the list. This is a simple approach than ../sum_of_three_to_zero.py
+# Algorithm: This program uses the two pointer approach after sorting the list. This is a simple and better approach compared to ../sum_of_three_to_zero.py
 
 def find3sum(alist):
   triplets = []
